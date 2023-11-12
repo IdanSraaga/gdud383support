@@ -1,6 +1,6 @@
 // Box.js
 import React from 'react';
-
+import '../styles/Box.css';
 const Box = ({ imageSrc, title }) => {
   return (
     <div className="box">

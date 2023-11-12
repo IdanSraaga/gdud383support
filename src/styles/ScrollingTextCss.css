@@ -1,0 +1,69 @@
+.home-scrolling-text{
+
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+
+  }
+  #scroll-container{
+    width: 100%;
+    height: 40%;
+    font-family: CerebriSans-Regular, -apple-system, system-ui, Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    border-radius: 6px;
+    background: #fff;
+    transition: all 300ms;
+    color: #555;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    overflow: hidden;
+    top: 14%;
+    margin: 5em;
+    flex: 0 0 150px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+
+  }
+  #scroll-text {
+    box-shadow:rgba(0, 0, 0, 0) 0px ;
+    --animation-duration: 8s;
+    height: 100%;
+    text-align: center;
+    font-size: 30px;
+    
+
+    /* animation properties */
+    -moz-transform: translateY(-100%);
+    -webkit-transform: translateY(-100%);
+    transform: translateY(-100%);
+    
+    -moz-animation: my-animation var(--animation-duration) linear infinite;
+    -webkit-animation: my-animation var(--animation-duration) linear infinite;
+    animation: my-animation var(--animation-duration) linear infinite;
+  }
+  #scroll-container:hover{
+    cursor: pointer;
+  }
+  /* for Firefox */
+  @-moz-keyframes my-animation {
+    from { -moz-transform: translateY(-100%); }
+    to { -moz-transform: translateY(100%); }
+  }
+
+  /* for Chrome */
+  @-webkit-keyframes my-animation {
+    from { -webkit-transform: translateY(-100%); }
+    to { -webkit-transform: translateY(100%); }
+  }
+
+  @keyframes my-animation {
+    from {
+      -moz-transform: translateY(-100%);
+      -webkit-transform: translateY(-100%);
+      transform: translateY(-100%);
+    }
+    to {
+      -moz-transform: translateY(100%);
+      -webkit-transform: translateY(100%);
+      transform: translateY(100%);
+    }
+  }
