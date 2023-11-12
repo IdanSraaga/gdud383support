@@ -1,0 +1,78 @@
+.home-container {
+    height: calc(100vh - 45px);
+    width: 100% ;
+    display: flex;
+    overflow: auto;
+    align-items: flex-start;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .home-column3 {
+    flex: 0 0 auto;
+    right: 0px;
+    width: 25%;
+    bottom: 0px;
+    height: 100vh;
+    display: flex;
+    position: absolute;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .home-right-buttons {
+    flex: 0 0 auto;
+    left: 15%;
+    width: 45%;
+    height: 70%;
+    margin: auto;
+    display: flex;
+    position: absolute;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 100px;
+  }
+  .home-column2 {
+    top: 0px;
+    flex: 0 0 auto;
+    left: 25%;
+    width: 50%;
+    height: 100vh;
+    display: flex;
+    position: absolute;
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .home-scrolling-text {
+    top: 20%;
+    flex: 0 0 auto;
+    width: 80%;
+    height: 50vh;
+    margin: auto;
+    display: flex;
+    position: absolute;
+    align-self: center;
+    align-items: center;
+    justify-content: center;
+  }
+  .home-column1 {
+    width: 25%;
+    height: 100vh;
+    display: flex;
+    position: relative;
+    align-self: flex-start;
+    align-items: center;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+  .home-left-buttons {
+    top: 0px;
+    right: 15%;
+    width: 45%;
+    bottom: 0px;
+    height: 70%;
+    margin: auto;
+    display: flex;
+    position: absolute;
+    align-items: center;
+    flex-direction: column;
+  }
