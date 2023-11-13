@@ -9,10 +9,7 @@ const HomeColumnCenter = () => {
   const [animationPaused, setAnimationPaused] = useState(false);
 
   useEffect(() => {
-    const handleDivClick = () => {
-      const modal = $('[data-remodal-id=modal]').remodal();
-      modal.open();
-    };
+
 
     const handleMouseEnter = () => {
       if (!animationPaused) {
@@ -43,18 +40,7 @@ const HomeColumnCenter = () => {
     }
 
     const myDiv = document.getElementById("scroll-container");
-    if (myDiv) {
-      myDiv.addEventListener("click", handleDivClick);
-      myDiv.addEventListener("mouseenter", handleMouseEnter);
-      myDiv.addEventListener("mouseleave", handleMouseLeave);
 
-      // Cleanup event listeners on component unmount
-      return () => {
-        myDiv.removeEventListener("click", handleDivClick);
-        myDiv.removeEventListener("mouseenter", handleMouseEnter);
-        myDiv.removeEventListener("mouseleave", handleMouseLeave);
-      };
-    }
 
   }, [animationPaused]);
 

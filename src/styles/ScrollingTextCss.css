@@ -3,6 +3,16 @@
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 
 }
+.popup-content {
+  position: absolute;
+  top: 50px; /* Adjust the top position as needed */
+  left: 50%; /* Center horizontally */
+  transform: translateX(-50%);
+  background-color: white;
+  padding: 20px;
+  border: 1px solid #ccc;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
 #scroll-container{
   width: 48vw;
   height: 40vh;
