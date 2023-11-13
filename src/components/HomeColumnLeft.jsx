@@ -2,6 +2,7 @@
 import '../styles/HomeColumns.css'
 import React from 'react';
 import Box from './Box';
+import '../styles/Box.css'
 const HomeColumnLeft = () => {
   return (
     <div className="home-column1">

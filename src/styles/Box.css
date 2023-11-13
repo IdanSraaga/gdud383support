@@ -1,18 +1,17 @@
 .box{
     height: 180px;
     width: 180px;
+    
     user-select: none;
-
     -webkit-backdrop-filter: blur(20px);
             backdrop-filter: blur(20px);
-    margin: auto;
+    margin-bottom: 20%;
     left: 0;
     right: 0;
     top: 0;
     bottom: 0;
     border-radius: 8px;
     box-shadow: rgb(115, 147, 179) 0px 6px 12px;
-
     font-family: 'Assistant',sans-serif;
 }
 .card-img{
