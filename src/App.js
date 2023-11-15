@@ -1,13 +1,18 @@
 import './App.css';
-import Navbar from '../src/components/Navbar'
-import HomeContainer from './components/HomeContainer';
+import HomePage from './components/HomePage';
+import SurveyForm from './components/SurveyForm';
+import { Router,Route, Switch } from "react-router";
+
 function App() {
   return (
-    <div className="App">
-      <Navbar />
-      <HomeContainer />
-    </div>
+    <Router>
+    <Switch>
+      <Route path="/" exact component={HomePage} />
+      <Route path="/survey" component={SurveyForm} />
+    </Switch>
+
+    </Router>
+
   );
 }
-
 export default App;
