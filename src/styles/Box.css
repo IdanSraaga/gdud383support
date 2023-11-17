@@ -1,7 +1,6 @@
 .box{
     height: 180px;
     width: 180px;
-    
     user-select: none;
     -webkit-backdrop-filter: blur(20px);
             backdrop-filter: blur(20px);

@@ -19,10 +19,10 @@
 
 .home-column2 {
   flex: 2; /* Take up 50% of the view */
+  margin-top: 30%;
 }
 
 .home-left-buttons,
-.home-center-buttons,
 .home-right-buttons {
   margin-top: 30%;
   display: flex;

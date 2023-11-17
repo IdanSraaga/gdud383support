@@ -1,8 +1,9 @@
 // HomeColumnRight.js
 import React from 'react';
 import { useEffect, useState } from 'react';
-
+import MainRouteButtons from './MainRouteButtons';
 import ScrollingText from './ScrollingText';
+import  "../styles/HomeColumnCenterCss.css"
 const $ = require('jquery');
 
 const HomeColumnCenter = () => {
@@ -46,11 +47,21 @@ const HomeColumnCenter = () => {
 
   return (
     
-    <div className="home-column2">
-      <div className="home-scrolling-text" id="scroll-container">
-        <ScrollingText />
+      <div className="home-column2">
+        <div className="container"> 
+          <div className="home-scrolling-text" id="scroll-container">
+            <ScrollingText />
+          </div>
+
+          {/* Two buttons */}
+          <div className="button-container">
+            <button className="button">Button 1</button>
+            <button className="button">Button 2</button>
+          </div>
+        </div>
+
       </div>
-    </div>
+
   );
 };
 

@@ -7,9 +7,9 @@ import HomeColumnLeft from './HomeColumnLeft';
 const HomeContainer = () => {
   return (
     <div className="home-container">
-      <HomeColumnRight />
-      <HomeColumnCenter />
       <HomeColumnLeft />
+      <HomeColumnCenter />
+      <HomeColumnRight />
     </div>
   );
 };

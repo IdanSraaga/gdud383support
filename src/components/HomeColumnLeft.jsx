@@ -5,11 +5,11 @@ import Box from './Box';
 import '../styles/Box.css'
 const HomeColumnLeft = () => {
   return (
-    <div className="home-column1">
+    <div className="home-column3">
         <div className="home-left-buttons">
-        <Box imageSrc="bad-review.png"  alt="תלונת לקוח"/>
-        <Box imageSrc="handshake.png" alt="אמנת השירות" />
-        <Box imageSrc="chat.png" alt="צור קשר" />
+        <Box imageSrc="bad-review.png"  />
+        <Box imageSrc="handshake.png"  />
+        <Box imageSrc="chat.png"  />
         {/* Add another Box component for the fourth box if needed */}
         </div>  
     </div>
