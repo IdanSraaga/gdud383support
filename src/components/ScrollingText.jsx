@@ -12,6 +12,7 @@ const ScrollingText = () => {
             <div className="ScrollingText" id="scroll-text">
               This is scrolling text.<br />
               This is scrolling text.<br />
+              This is scrolling text.<br />
               This is scrolling text.
             </div>
           </div>
