@@ -6,6 +6,7 @@ import Handshake from "../imgs/handshake.png"
 import Chat from "../imgs/chat.png"
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css'; // Import the default styles
+import ContactUs from './ContactUs';
 import SLA from '../components/SLA'
 const HomeColumnRight = () => {
   return (
@@ -48,8 +49,42 @@ const HomeColumnRight = () => {
           )}
         </Popup>
         </div>
+        <div >
+          <Popup 
+          trigger={
+          <div >
+            <Box imageSrc={Chat} alt="צור קשר" title="צור קשר" />
+          </div>
+          }
+          modal
+          nested
+          overlayStyle={{ background: 'rgba(0,0,0,0.7)' }} // Set overlay style
+          contentStyle={{
+              // Set your content style
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+              borderRadius: '15px',
+              padding: '20px',
+              border: 'none',
+              width: '30%',
+              height:'40%',
+              maxHeight: '70vh',
+              overflowY: 'auto',        
 
-        <Box imageSrc={Chat} alt="צור קשר" title="צור קשר" />
+          }}
+        >
+          {(close) => (
+            <div className="modal" >
+              <button className="close" onClick={close}>
+                &times;
+              </button>
+              <ContactUs/>
+            </div>
+          )}
+        </Popup>
+        </div>
         {/* Add another Box component for the fourth box if needed */}
         </div>  
     </div>
