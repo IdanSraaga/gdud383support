@@ -8,6 +8,7 @@ import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css'; // Import the default styles
 import ContactUs from './ContactUs';
 import SLA from '../components/SLA'
+import ContactImg from "../imgs/contact.png"
 const HomeColumnRight = () => {
   return (
     <div className="home-column1">
@@ -43,7 +44,6 @@ const HomeColumnRight = () => {
               <button className="close" onClick={close}>
                 &times;
               </button>
-              
               <SLA/>
             </div>
           )}
@@ -77,10 +77,16 @@ const HomeColumnRight = () => {
         >
           {(close) => (
             <div className="modal" >
-              <button className="close" onClick={close}>
+              <button className="close"  onClick={close}>
                 &times;
               </button>
+              <div style={{position: 'absolute',
+    right: 20,
+    top: 20}}>
+               <img src= {ContactImg} alt="" class="contact-img" />
+              </div>
               <ContactUs/>
+              
             </div>
           )}
         </Popup>
