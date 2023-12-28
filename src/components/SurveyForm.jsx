@@ -1,93 +1,226 @@
+import '../misc/bootstrap.min.css';
+import '../styles/Survey.css'
+import React, { useState } from 'react';
+
 const SurveyForm = () => {
+  // Use state to manage form errors
+  const [formError, setFormError] = useState(false);
+
+  // Use state to manage form values
+  const [formValues, setFormValues] = useState({
+    sex: null,
+    age: '',
+    tel: '',
+    name: '',
+    email: '',
+  });
+
+  // Function to validate phone
+  const validatePhone = (phone) => {
+    const regex = /^0?(([23489]{1}[0-9]{7})|[57]{1}[0-9]{8})+$/;
+    return regex.test(phone);
+  };
+
+  // Function to validate email
+  const validateEmail = (email) => {
+    const regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return regex.test(String(email).toLowerCase());
+  };
+
+  // Function to show input error messages
+  const showError = (inputId, message) => {
+    const small = document.querySelector(`#${inputId}error`);
+    if (small) {
+      small.innerText = message;
+    }
+  };
+
+  // Function to show success color
+  const showSuccess = (input) => {
+    input.style.border = '3px solid rgb(75, 181, 67)';
+  };
+
+  // Function to handle form submission
+  const handleSubmit = () => {
+    let isFormError = false;
+
+    // Validate phone
+    if (!validatePhone(formValues.tel)) {
+      console.log('Telephone is incorrect');
+      showError('tel', 'נא למלא את הערך');
+      isFormError = true;
+    }
+
+    // Additional form validations can be added here
+
+    if (!isFormError && formValues.sex !== null) {
+      // Handle form submission logic here
+      console.log('Form submitted successfully');
+      scrollToTop(); // Ensure you have the scrollToTop function
+
+      // For demonstration, you can update the state or perform other actions
+      // Update state or make API calls as needed
+      // setFormValues({ ...formValues, ...newValues });
+    } else {
+      console.log('Error occurred');
+      setFormError(true);
+    }
+  };
+
+  // Function to get selected radio value
+  const getSelectedRadio = () => {
+    const radioMale = document.getElementById('sex-male');
+    const radioFemale = document.getElementById('sex-female');
+    if (radioMale.checked) {
+      return 'Male';
+    } else if (radioFemale.checked) {
+      return 'Female';
+    }
+    return null;
+  };
+  
+  // Function to scroll to the top
+  const scrollToTop = () => {
+    window.scroll({
+      top: 0,
+      behavior: 'smooth',
+    });
+  };
+  useEffect(() => {
+    const goToStep2Trigger = document.querySelector('#go-to-step-2');
+    if (goToStep2Trigger) {
+      goToStep2Trigger.addEventListener('click', handleSubmit);
+    }
+
+    const step2Tab = document.querySelector('#step-2-tab');
+    if (step2Tab) {
+      step2Tab.addEventListener('click', handleSubmit);
+    }
+
+    const goToStep3Trigger = document.querySelector('#go-to-step-3');
+    if (goToStep3Trigger) {
+      goToStep3Trigger.addEventListener('click', () => {
+        scrollToTop();
+        setTimeout(() => {
+          const step3TabElement = document.querySelector('#step-3-tab');
+          if (step3TabElement) {
+            const step3Tab = new bootstrap.Tab(step3TabElement);
+            step3Tab.show();
+          }
+        }, 200);
+      });
+    }
+
+    // Cleanup event listeners on component unmount
+    return () => {
+      if (goToStep2Trigger) {
+        goToStep2Trigger.removeEventListener('click', handleSubmit);
+      }
+      if (step2Tab) {
+        step2Tab.removeEventListener('click', handleSubmit);
+      }
+      if (goToStep3Trigger) {
+        goToStep3Trigger.removeEventListener('click', () => {
+          // Cleanup logic if needed
+        });
+      }
+    };
+  }, [handleSubmit]);
+
+  // Event listeners for buttons (adjust IDs based on your actual IDs)
+  document.getElementById('go-to-step-2').addEventListener('click', handleSubmit);
+  document.getElementById('step-2-tab').addEventListener('click', handleSubmit);
+
+
     return (
         <form>
-        <div class="container mt-3 mt-lg-5">
-            <header class="mb-4">
-                <h1 class="display-3 text-center ">גדוד 383</h1>
-                <h2 class="lead text-center">סקר שירות תמיכת גדוד 383</h2>
+        <div className="container mt-3 mt-lg-5">
+            <header className="mb-4">
+                <h1 className="display-3 text-center ">גדוד 383</h1>
+                <h2 className="lead text-center">סקר שירות תמיכת גדוד 383</h2>
             </header>
             <main>
-                <ul class="nav nav-tabs nav-justified">
-                    <li class="nav-item  "><a href="#step-1" id="step-1-tab" data-bs-toggle="tab" class="nav-link h3 active">step 1 <small
-                                class="d-none d-md-block lead">personal info</small></a></li>
-                    <li class="nav-item  "><a  href="#step-2" id="step-2-tab" data-bs-toggle="tab" class="nav-link h3 disabled ">step 2 <small
-                                class="d-none d-md-block lead">questions/answers</small></a></li>
-                    <li class="nav-item  "><a href="#step-3" id="step-3-tab" data-bs-toggle="tab" class="nav-link h3 disabled">step 3 <small
-                                class="d-none d-md-block lead">questions/rating</small></a></li>
+                <ul className="nav nav-tabs nav-justified">
+                    <li className="nav-item  "><a href="#step-1" id="step-1-tab" data-bs-toggle="tab" className="nav-link h3 active">step 1 <small
+                                className="d-none d-md-block lead">personal info</small></a></li>
+                    <li className="nav-item  "><a  href="#step-2" id="step-2-tab" data-bs-toggle="tab" className="nav-link h3 disabled ">step 2 <small
+                                className="d-none d-md-block lead">questions/answers</small></a></li>
+                    <li className="nav-item  "><a href="#step-3" id="step-3-tab" data-bs-toggle="tab" className="nav-link h3 disabled">step 3 <small
+                                className="d-none d-md-block lead">questions/rating</small></a></li>
                 </ul>
-                <div class="tab-content">
-                    <div id="step-1" class="tab-pane fade  show active   pt-4 ">
-                        <div class="row">
-                            <div class="col-md-3">
-                                <label for="" class="form-label fw-bold">מין:</label>
+                <div className="tab-content">
+                    <div id="step-1" className="tab-pane fade  show active   pt-4 ">
+                        <div className="row">
+                            <div className="col-md-3">
+                                <label htmlFor="" className="form-label fw-bold">מין:</label>
                                 <div>
-                                    <div class="form-check-inline form-check">
-                                        <input type="radio" name="sex" id="sex-male" value="male" class="form-check-input"></input>
-                                        <label for="sex-male" class="form-check-label">זכר</label>
+                                    <div className="form-check-inline form-check">
+                                        <input type="radio" name="sex" id="sex-male" value="male" className="form-check-input"/>
+                                        <label htmlFor="sex-male" className="form-check-label">זכר</label>
                                     </div>
-                                    <div class="form-check-inline form-check">
+                                    <div className="form-check-inline form-check">
                                         <input type="radio" name="sex" id="sex-female" value="female"
-                                            class="form-check-input"></input>
-                                        <label for="sex-female" class="form-check-label">נקבה</label>
+                                            className="form-check-input"/>
+                                        <label htmlFor="sex-female" className="form-check-label">נקבה</label>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-3 my-3 my-md-auto">
-                                <label for="age" class="form-label fw-bold" >
+                            <div className="col-md-3 my-3 my-md-auto">
+                                <label htmlFor="age" className="form-label fw-bold" >
                                     גיל:
                                 </label>
-                                <input type="number" class="form-control" id="age" >
+                                <input type="number" className="form-control" id="age" />
                                     <small id="ageerror"></small>
-                                </input>   
+                                  
                                 
                             </div>
-                            <div class="col-md-6 my-3 my-md-auto">
-                                <label for="tel" class="form-label fw-bold" >
+                            <div className="col-md-6 my-3 my-md-auto">
+                                <label htmlFor="tel" className="form-label fw-bold" >
                                     טלפון:
                                 </label>
-                                <input type="tel" class="form-control" id="tel" maxlength="10">
+                                <input type="tel" className="form-control" id="tel" maxLength="10"/>
                                     <small id="telerror"></small>
-                                </input>   
+                                  
                             </div>
                         </div>
-                        <div class="row my-md-3">
-                            <div class="col-md-6 my-3 my-md-auto">
-                                <label for="name" class="form-label fw-bold">שם מלא:</label>
-                                <input type="text" id="name" class="form-control" placeholder="שם מלא">
+                        <div className="row my-md-3">
+                            <div className="col-md-6 my-3 my-md-auto">
+                                <label htmlFor="name" className="form-label fw-bold">שם מלא:</label>
+                                <input type="text" id="name" className="form-control" placeholder="שם מלא"/>
                                     <small id="nameerror"></small>
-                                </input>
+                                
                      
                             </div>
-                            <div class="col-md-6 my-3 my-md-auto">
-                                <label for="email" class="form-label fw-bold">דוא"ל:</label>
-                                <input type="email" id="email" name="email" class="form-control" placeholder="Username@domain.com">
+                            <div className="col-md-6 my-3 my-md-auto">
+                                <label htmlFor="email" className="form-label fw-bold">דוא"ל:</label>
+                                <input type="email" id="email" name="email" className="form-control" placeholder="Username@domain.com"/>
                                     <small id="emailerror"></small>
-                                </input>                      
+                                                    
                             </div>
                         </div>
-                        <div class="row my-md-3">
-                            <div class="col-md-9 my-3 my-md-auto">
-                                <label for="address-1" class="form-label fw-bold">Address part 1:</label>
-                                <input type="text" id="address-1" class="form-control"
-                                    placeholder="123 streetname neighborhood"></input>
+                        <div className="row my-md-3">
+                            <div className="col-md-9 my-3 my-md-auto">
+                                <label htmlFor="address-1" className="form-label fw-bold">Address part 1:</label>
+                                <input type="text" id="address-1" className="form-control"
+                                    placeholder="123 streetname neighborhood"/>
                             </div>
-                            <div class="col-md-3 my-3 my-md-auto">
-                                <label for="address-2" class="form-label fw-bold">Address part 2:</label>
-                                <input type="text" id="address-2" class="form-control" placeholder="B3 3th floor"></input>
+                            <div className="col-md-3 my-3 my-md-auto">
+                                <label htmlFor="address-2" className="form-label fw-bold">Address part 2:</label>
+                                <input type="text" id="address-2" className="form-control" placeholder="B3 3th floor"/>
                             </div>
                         </div>
-                        <div class="row my-md-3">
-                            <div class="col-md-6 my-3 my-md-auto">
-                                <label for="city" class="form-label fw-bold">City:</label>
-                                <input type="text" id="city" class="form-control" placeholder="Tehran"></input>
+                        <div className="row my-md-3">
+                            <div className="col-md-6 my-3 my-md-auto">
+                                <label htmlFor="city" className="form-label fw-bold">City:</label>
+                                <input type="text" id="city" className="form-control" placeholder="Tehran"/>
                             </div>
-                            <div class="col-md-2 my-3 my-md-auto">
-                                <label for="zip" class="form-label fw-bold">Zip:</label>
-                                <input type="number" id="zip" class="form-control" placeholder="0098-21"></input>
+                            <div className="col-md-2 my-3 my-md-auto">
+                                <label htmlFor="zip" className="form-label fw-bold">Zip:</label>
+                                <input type="number" id="zip" className="form-control" placeholder="0098-21"/>
                             </div>
-                            <div class="col-md-4 my-3 my-md-auto">
-                                <label for="country" class="form-label fw-bold">Country:</label>
-                                <input list="countries" id="country" class="form-control"></input>
+                            <div className="col-md-4 my-3 my-md-auto">
+                                <label htmlFor="country" className="form-label fw-bold">Country:</label>
+                                <input list="countries" id="country" className="form-control"/>
                                 <datalist id="countries">
                                     <option value="Iran"></option>
                                     <option value="England"></option>
@@ -97,166 +230,166 @@ const SurveyForm = () => {
     
                             </div>
                         </div>
-                        <button type="button" class="btn btn-outline-secondary d-block ms-auto" id="go-to-step-2">Step
+                        <button type="button" className="btn btn-outline-secondary d-block ms-auto" id="go-to-step-2">Step
                             2
                         </button>
     
     
     
                     </div>
-                    <div id="step-2" class="tab-pane fade  pt-4 ">
-                        <h5 class="text-center my-2">Question #1: Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    <div id="step-2" className="tab-pane fade  pt-4 ">
+                        <h5 className="text-center my-2">Question #1: Lorem ipsum dolor sit amet consectetur adipisicing elit.
                             Dolorum.</h5>
-                        <div class="row my-3">
-                            <div class="col-lg-6">
-                                <figure class="figure">
-                                    <img src="img/1600x900.png" class="figure-img img-fluid rounded" alt="img"></img>
-                                    <figcaptiin class="figure-caption">Lorem ipsum dolor sit.</figcaptiin>
+                        <div className="row my-3">
+                            <div className="col-lg-6">
+                                <figure className="figure">
+                                    <img src="img/1600x900.png" className="figure-img img-fluid rounded" alt="img"></img>
+                                    <figcaption className="figure-caption">Lorem ipsum dolor sit.</figcaption>
                                 </figure>
                             </div>
-                            <div class="col-lg-6">
-                                <div class="form-check ">
-                                    <input type="radio" id="answer-1" class="form-check-input " name="answer-1"></input>
-                                    <label for="answer-1" class="form-label">Answer-1</label>
+                            <div className="col-lg-6">
+                                <div className="form-check ">
+                                    <input type="radio" id="answer-1" className="form-check-input " name="answer-1"/>
+                                    <label htmlFor="answer-1" className="form-label">Answer-1</label>
                                 </div>
-                                <div class="form-check ">
-                                    <input type="radio" id="answer-2" class="form-check-input " name="answer-1"></input>
-                                    <label for="answer-2" class="form-label">Answer-2</label>
+                                <div className="form-check ">
+                                    <input type="radio" id="answer-2" className="form-check-input " name="answer-1"/>
+                                    <label htmlFor="answer-2" className="form-label">Answer-2</label>
                                 </div>
-                                <div class="form-check ">
-                                    <input type="radio" id="answer-3" class="form-check-input " name="answer-1"></input>
-                                    <label for="answer-3" class="form-label">Answer-3</label>
+                                <div className="form-check ">
+                                    <input type="radio" id="answer-3" className="form-check-input " name="answer-1"/>
+                                    <label htmlFor="answer-3" className="form-label">Answer-3</label>
                                 </div>
-                                <div class="form-check ">
-                                    <input type="radio" id="answer-4" class="form-check-input " name="answer-1"></input>
-                                    <label for="answer-4" class="form-label">Answer-4</label>
+                                <div className="form-check ">
+                                    <input type="radio" id="answer-4" className="form-check-input " name="answer-1"/>
+                                    <label htmlFor="answer-4" className="form-label">Answer-4</label>
                                 </div>
-                                <div class="form-check ">
-                                    <input type="radio" id="answer-5" class="form-check-input " name="answer-1"></input>
-                                    <label for="answer-5" class="form-label">
-                                        <input type="text" class="form-control form-control-sm" size="30"></input>
+                                <div className="form-check ">
+                                    <input type="radio" id="answer-5" className="form-check-input " name="answer-1"/>
+                                    <label htmlFor="answer-5" className="form-label">
+                                        <input type="text" className="form-control form-control-sm" size="30"/>
                                     </label>
-                                    <p class="text-muted small mt-1">Lorem ipsum dolor sit amet consectetur adipisicing
+                                    <p className="text-muted small mt-1">Lorem ipsum dolor sit amet consectetur adipisicing
                                         elit. Sed numquam alias dolores?</p>
     
                                 </div>
                             </div>
                         </div>
-                        <hr></hr>
-                        <h5 class="text-center my-2">Question #2: Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        <hr/>
+                        <h5 className="text-center my-2">Question #2: Lorem ipsum dolor sit amet consectetur adipisicing elit.
                             Dolorum.</h5>
-                        <div class="row my-3">
-                            <div class="col-lg-6">
-                                <figure class="figure">
-                                    <img src="img/1600x900.png" class="figure-img img-fluid rounded" alt="img"></img>
-                                    <figcaptiin class="figure-caption">Lorem ipsum dolor sit.</figcaptiin>
+                        <div className="row my-3">
+                            <div className="col-lg-6">
+                                <figure className="figure">
+                                    <img src="img/1600x900.png" className="figure-img img-fluid rounded" alt="img"></img>
+                                    <figcaption className="figure-caption">Lorem ipsum dolor sit.</figcaption>
                                 </figure>
                             </div>
-                            <div class="col-lg-6">
-                                <div class="form-check ">
-                                    <input type="radio" id="answer-6" class="form-check-input " name="answer-2"></input>
-                                    <label for="answer-6" class="form-label">Answer-1</label>
+                            <div className="col-lg-6">
+                                <div className="form-check ">
+                                    <input type="radio" id="answer-6" className="form-check-input " name="answer-2"/>
+                                    <label htmlFor="answer-6" className="form-label">Answer-1</label>
                                 </div>
-                                <div class="form-check ">
-                                    <input type="radio" id="answer-7" class="form-check-input " name="answer-2"></input>
-                                    <label for="answer-7" class="form-label">Answer-2</label>
+                                <div className="form-check ">
+                                    <input type="radio" id="answer-7" className="form-check-input " name="answer-2"/>
+                                    <label htmlFor="answer-7" className="form-label">Answer-2</label>
                                 </div>
-                                <div class="form-check ">
-                                    <input type="radio" id="answer-8" class="form-check-input " name="answer-2"></input>
-                                    <label for="answer-8" class="form-label">Answer-3</label>
+                                <div className="form-check ">
+                                    <input type="radio" id="answer-8" className="form-check-input " name="answer-2"/>
+                                    <label htmlFor="answer-8" className="form-label">Answer-3</label>
                                 </div>
-                                <div class="form-check ">
-                                    <input type="radio" id="answer-9" class="form-check-input " name="answer-2"></input>
-                                    <label for="answer-9" class="form-label">Answer-4</label>
+                                <div className="form-check ">
+                                    <input type="radio" id="answer-9" className="form-check-input " name="answer-2"/>
+                                    <label htmlFor="answer-9" className="form-label">Answer-4</label>
                                 </div>
-                                <div class="form-check ">
-                                    <input type="radio" id="answer-10" class="form-check-input " name="answer-2"></input>
-                                    <label for="answer-10" class="form-label">
-                                        <input type="text" class="form-control form-control-sm" size="30"></input>
+                                <div className="form-check ">
+                                    <input type="radio" id="answer-10" className="form-check-input " name="answer-2"/>
+                                    <label htmlFor="answer-10" className="form-label">
+                                        <input type="text" className="form-control form-control-sm" size="30"/>
                                     </label>
-                                    <p class="text-muted small mt-1">Lorem ipsum dolor sit amet consectetur adipisicing
+                                    <p className="text-muted small mt-1">Lorem ipsum dolor sit amet consectetur adipisicing
                                         elit. Sed numquam alias dolores?</p>
     
                                 </div>
                             </div>
                         </div>
-                        <hr></hr>
-                        <h5 class="text-center my-2">Question #3: Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        <hr/>
+                        <h5 className="text-center my-2">Question #3: Lorem ipsum dolor sit amet consectetur adipisicing elit.
                             Dolorum.</h5>
-                        <div class="row my-3">
-                            <div class="col-lg-6">
-                                <figure class="figure">
-                                    <img src="img/1600x900.png" class="figure-img img-fluid rounded" alt="img"></img>
-                                    <figcaptiin class="figure-caption">Lorem ipsum dolor sit.</figcaptiin>
+                        <div className="row my-3">
+                            <div className="col-lg-6">
+                                <figure className="figure">
+                                    <img src="img/1600x900.png" className="figure-img img-fluid rounded" alt="img"></img>
+                                    <figcaption className="figure-caption">Lorem ipsum dolor sit.</figcaption>
                                 </figure>
                             </div>
-                            <div class="col-lg-6">
-                                <div class="form-check ">
-                                    <input type="checkbox" id="answer-11" class="form-check-input " name="answer-3"></input>
-                                    <label for="answer-11" class="form-label">Answer-1</label>
+                            <div className="col-lg-6">
+                                <div className="form-check ">
+                                    <input type="checkbox" id="answer-11" className="form-check-input " name="answer-3"/>
+                                    <label htmlFor="answer-11" className="form-label">Answer-1</label>
                                 </div>
-                                <div class="form-check ">
-                                    <input type="checkbox" id="answer-12" class="form-check-input " name="answer-4"></input>
-                                    <label for="answer-12" class="form-label">Answer-2</label>
+                                <div className="form-check ">
+                                    <input type="checkbox" id="answer-12" className="form-check-input " name="answer-4"/>
+                                    <label htmlFor="answer-12" className="form-label">Answer-2</label>
                                 </div>
-                                <div class="form-check ">
-                                    <input type="checkbox" id="answer-13" class="form-check-input " name="answer-5"></input>
-                                    <label for="answer-13" class="form-label">Answer-3</label>
+                                <div className="form-check ">
+                                    <input type="checkbox" id="answer-13" className="form-check-input " name="answer-5"/>
+                                    <label htmlFor="answer-13" className="form-label">Answer-3</label>
                                 </div>
-                                <div class="form-check ">
-                                    <input type="checkbox" id="answer-14" class="form-check-input " name="answer-6"></input>
-                                    <label for="answer-14" class="form-label">Answer-4</label>
+                                <div className="form-check ">
+                                    <input type="checkbox" id="answer-14" className="form-check-input " name="answer-6"/>
+                                    <label htmlFor="answer-14" className="form-label">Answer-4</label>
                                 </div>
-                                <div class="form-check ">
-                                    <input type="checkbox" id="answer-15" class="form-check-input " name="answer-7"></input>
-                                    <label for="answer-15" class="form-label">
-                                        <input type="text" class="form-control form-control-sm" size="30"></input>
+                                <div className="form-check ">
+                                    <input type="checkbox" id="answer-15" className="form-check-input " name="answer-7"/>
+                                    <label htmlFor="answer-15" className="form-label">
+                                        <input type="text" className="form-control form-control-sm" size="30"/>
                                     </label>
-                                    <p class="text-muted small mt-1">Lorem ipsum dolor sit amet consectetur adipisicing
+                                    <p className="text-muted small mt-1">Lorem ipsum dolor sit amet consectetur adipisicing
                                         elit. Sed numquam alias dolores?</p>
     
                                 </div>
                             </div>
                         </div>
-                        <button type="button" class="btn btn-outline-secondary ms-auto d-block" id="go-to-step-3">Step
+                        <button type="button" className="btn btn-outline-secondary ms-auto d-block" id="go-to-step-3">Step
                             3</button>
                     </div>
-                    <div id="step-3" class="tab-pane fade my-3  pt-4 ">
-                        <div class="row my-2">
-                            <div class="col-lg-6">
-                                <h2 class="h5">Question #4: Lorem ipsum dolor sit ameo est dolquibusdam optio voluptas! Ex.
+                    <div id="step-3" className="tab-pane fade my-3  pt-4 ">
+                        <div className="row my-2">
+                            <div className="col-lg-6">
+                                <h2 className="h5">Question #4: Lorem ipsum dolor sit ameo est dolquibusdam optio voluptas! Ex.
                                 </h2>
-                                <p class="small">Lorem ipsum dolor sit. Lorem, ipsum dolor.</p>
+                                <p className="small">Lorem ipsum dolor sit. Lorem, ipsum dolor.</p>
     
                             </div>
-                            <div class="col-lg-6 ">
-                                <div class=" d-flex justify-content-between mb-2">
-                                    <div class="form-check">
-                                        <input type="radio" class="form-check-input" value="q4-a1" id="q4-a1" name="q4-a"></input>
-                                        <label class="form-check-label" for="q4-a1">1</label>
+                            <div className="col-lg-6 ">
+                                <div className=" d-flex justify-content-between mb-2">
+                                    <div className="form-check">
+                                        <input type="radio" className="form-check-input" value="q4-a1" id="q4-a1" name="q4-a"/>
+                                        <label className="form-check-label" htmlFor="q4-a1">1</label>
                                     </div>
-                                    <div class="form-check">
-                                        <input type="radio" class="form-check-input" value="q4-a2" id="q4-a2" name="q4-a"></input>
-                                        <label class="form-check-label" for="q4-a2">2</label>
+                                    <div className="form-check">
+                                        <input type="radio" className="form-check-input" value="q4-a2" id="q4-a2" name="q4-a"/>
+                                        <label className="form-check-label" htmlFor="q4-a2">2</label>
                                     </div>
-                                    <div class="form-check">
-                                        <input type="radio" class="form-check-input" value="q4-a3" id="q4-a3" name="q4-a"></input>
-                                        <label class="form-check-label" for="q4-a3">3</label>
+                                    <div className="form-check">
+                                        <input type="radio" className="form-check-input" value="q4-a3" id="q4-a3" name="q4-a"/>
+                                        <label className="form-check-label" htmlFor="q4-a3">3</label>
                                     </div>
-                                    <div class="form-check">
-                                        <input type="radio" class="form-check-input" value="q4-a4" id="q4-a4" name="q4-a"></input>
-                                        <label class="form-check-label" for="q4-a4">4</label>
+                                    <div className="form-check">
+                                        <input type="radio" className="form-check-input" value="q4-a4" id="q4-a4" name="q4-a"/>
+                                        <label className="form-check-label" htmlFor="q4-a4">4</label>
                                     </div>
-                                    <div class="form-check">
-                                        <input type="radio" class="form-check-input" value="q4-a5" id="q4-a5" name="q4-a"></input>
-                                        <label class="form-check-label" for="q4-a5">5</label>
+                                    <div className="form-check">
+                                        <input type="radio" className="form-check-input" value="q4-a5" id="q4-a5" name="q4-a"/>
+                                        <label className="form-check-label" htmlFor="q4-a5">5</label>
                                     </div>
-                                    <div class="form-check">
-                                        <input type="radio" class="form-check-input" value="q4-ana" id="q4-ana" name="q4-a"></input>
-                                        <label class="form-check-label" for="q4-ana">נמנע</label>
+                                    <div className="form-check">
+                                        <input type="radio" className="form-check-input" value="q4-ana" id="q4-ana" name="q4-a"/>
+                                        <label className="form-check-label" htmlFor="q4-ana">נמנע</label>
                                     </div>
                                 </div>
-                                <textarea class="form-control" rows="2"
+                                <textarea className="form-control" rows="2"
                                     placeholder="write something for Ali ..."></textarea>
     
     
@@ -264,45 +397,45 @@ const SurveyForm = () => {
     
     
                             </div>
-                            <hr class="mt-4"></hr>
+                            <hr className="mt-4"/>
     
     
                         </div>
-                        <div class="row my-2">
-                            <div class="col-lg-6">
-                                <h2 class="h5">Question #5: Lorem ipsum dolor sit ameo est dolquibusdam optio voluptas! Ex.
+                        <div className="row my-2">
+                            <div className="col-lg-6">
+                                <h2 className="h5">Question #5: Lorem ipsum dolor sit ameo est dolquibusdam optio voluptas! Ex.
                                 </h2>
-                                <p class="small">Lorem ipsum dolor sit. Lorem, ipsum dolor.</p>
+                                <p className="small">Lorem ipsum dolor sit. Lorem, ipsum dolor.</p>
     
                             </div>
-                            <div class="col-lg-6 ">
-                                <div class=" d-flex justify-content-between mb-2">
-                                    <div class="form-check">
-                                        <input type="radio" class="form-check-input" value="q5-a1" id="q5-a1" name="q5-a"></input>
-                                        <label class="form-check-label" for="q5-a1">1</label>
+                            <div className="col-lg-6 ">
+                                <div className=" d-flex justify-content-between mb-2">
+                                    <div className="form-check">
+                                        <input type="radio" className="form-check-input" value="q5-a1" id="q5-a1" name="q5-a"/>
+                                        <label className="form-check-label" htmlFor="q5-a1">1</label>
                                     </div>
-                                    <div class="form-check">
-                                        <input type="radio" class="form-check-input" value="q5-a2" id="q5-a2" name="q5-a"></input>
-                                        <label class="form-check-label" for="q5-a2">2</label>
+                                    <div className="form-check">
+                                        <input type="radio" className="form-check-input" value="q5-a2" id="q5-a2" name="q5-a"/>
+                                        <label className="form-check-label" htmlFor="q5-a2">2</label>
                                     </div>
-                                    <div class="form-check">
-                                        <input type="radio" class="form-check-input" value="q5-a3" id="q5-a3" name="q5-a"></input>
-                                        <label class="form-check-label" for="q5-a3">3</label>
+                                    <div className="form-check">
+                                        <input type="radio" className="form-check-input" value="q5-a3" id="q5-a3" name="q5-a"/>
+                                        <label className="form-check-label" htmlFor="q5-a3">3</label>
                                     </div>
-                                    <div class="form-check">
-                                        <input type="radio" class="form-check-input" value="q5-a4" id="q5-a4" name="q5-a"></input>
-                                        <label class="form-check-label" for="q4-a4">4</label>
+                                    <div className="form-check">
+                                        <input type="radio" className="form-check-input" value="q5-a4" id="q5-a4" name="q5-a"/>
+                                        <label className="form-check-label" htmlFor="q4-a4">4</label>
                                     </div>
-                                    <div class="form-check">
-                                        <input type="radio" class="form-check-input" value="q5-a5" id="q5-a5" name="q5-a"></input>
-                                        <label class="form-check-label" for="q4-a5">5</label>
+                                    <div className="form-check">
+                                        <input type="radio" className="form-check-input" value="q5-a5" id="q5-a5" name="q5-a"/>
+                                        <label className="form-check-label" htmlFor="q4-a5">5</label>
                                     </div>
-                                    <div class="form-check">
-                                        <input type="radio" class="form-check-input" value="q5-ana" id="q5-ana" name="q5-a"></input>
-                                        <label class="form-check-label" for="q5-ana">נמנע</label>
+                                    <div className="form-check">
+                                        <input type="radio" className="form-check-input" value="q5-ana" id="q5-ana" name="q5-a"/>
+                                        <label className="form-check-label" htmlFor="q5-ana">נמנע</label>
                                     </div>
                                 </div>
-                                <textarea class="form-control" rows="2"
+                                <textarea className="form-control" rows="2"
                                     placeholder="write something for Ali ..."></textarea>
     
     
@@ -310,42 +443,42 @@ const SurveyForm = () => {
     
     
                             </div>
-                            <hr class="mt-4"> </hr>
+                            <hr className="mt-4"/>
     
     
                         </div>
-                        <div class="row my-2">
-                            <div class="col-lg-6">
-                                <h2 class="h5">Question #6: Lorem ipsum dolor sit ameo est dolquibusdam optio voluptas! Ex.
+                        <div className="row my-2">
+                            <div className="col-lg-6">
+                                <h2 className="h5">Question #6: Lorem ipsum dolor sit ameo est dolquibusdam optio voluptas! Ex.
                                 </h2>
-                                <p class="small">Lorem ipsum dolor sit. Lorem, ipsum dolor.</p>
+                                <p className="small">Lorem ipsum dolor sit. Lorem, ipsum dolor.</p>
     
                             </div>
-                            <div class="col-lg-6 ">
-                                <div class="  mb-2">
-                                    <div class="btn-group btn-group-lg w-100">
-                                        <input type="radio" class="btn-check" value="q6-a1" id="q6-a1" name="q6-a"></input>
-                                        <label class="btn btn-outline-secondary" for="q6-a1">1</label>
+                            <div className="col-lg-6 ">
+                                <div className="  mb-2">
+                                    <div className="btn-group btn-group-lg w-100">
+                                        <input type="radio" className="btn-check" value="q6-a1" id="q6-a1" name="q6-a"/>
+                                        <label className="btn btn-outline-secondary" htmlFor="q6-a1">1</label>
     
     
-                                        <input type="radio" class="btn-check" value="q6-a2" id="q6-a2" name="q6-a"></input>
-                                        <label class="btn btn-outline-secondary" for="q6-a2">2</label>
+                                        <input type="radio" className="btn-check" value="q6-a2" id="q6-a2" name="q6-a"/>
+                                        <label className="btn btn-outline-secondary" htmlFor="q6-a2">2</label>
     
     
-                                        <input type="radio" class="btn-check" value="q6-a3" id="q6-a3" name="q6-a"></input>
-                                        <label class="btn btn-outline-secondary" for="q6-a3">3</label>
+                                        <input type="radio" className="btn-check" value="q6-a3" id="q6-a3" name="q6-a"/>
+                                        <label className="btn btn-outline-secondary" htmlFor="q6-a3">3</label>
     
-                                        <input type="radio" class="btn-check" value="q6-a4" id="q6-a4" name="q6-a"></input>
-                                        <label class="btn btn-outline-secondary" for="q4-a4">4</label>
+                                        <input type="radio" className="btn-check" value="q6-a4" id="q6-a4" name="q6-a"/>
+                                        <label className="btn btn-outline-secondary" htmlFor="q4-a4">4</label>
     
-                                        <input type="radio" class="btn-check" value="q6-a5" id="q6-a5" name="q6-a"></input>
-                                        <label class="btn btn-outline-secondary" for="q6-a5">5</label>
+                                        <input type="radio" className="btn-check" value="q6-a5" id="q6-a5" name="q6-a"/>
+                                        <label className="btn btn-outline-secondary" htmlFor="q6-a5">5</label>
     
-                                        <input type="radio" class="btn-check" value="q6-ana" id="q6-ana" name="q6-a"></input>
-                                        <label class="btn btn-outline-secondary" for="q6-ana">נמנע</label>
+                                        <input type="radio" className="btn-check" value="q6-ana" id="q6-ana" name="q6-a"/>
+                                        <label className="btn btn-outline-secondary" htmlFor="q6-ana">נמנע</label>
                                     </div>
                                 </div>
-                                <textarea class="form-control" rows="2"
+                                <textarea className="form-control" rows="2"
                                     placeholder="write something for Ali ..."></textarea>
     
     
@@ -353,41 +486,41 @@ const SurveyForm = () => {
     
     
                             </div>
-                            <hr class="mt-4"></hr>
+                            <hr className="mt-4"/>
     
                         </div>
-                        <div class="row my-2">
-                            <div class="col-lg-6">
-                                <h2 class="h5">Question #7: Lorem ipsum dolor sit ameo est dolquibusdam optio voluptas! Ex.
+                        <div className="row my-2">
+                            <div className="col-lg-6">
+                                <h2 className="h5">Question #7: Lorem ipsum dolor sit ameo est dolquibusdam optio voluptas! Ex.
                                 </h2>
-                                <p class="small">Lorem ipsum dolor sit. Lorem, ipsum dolor.</p>
+                                <p className="small">Lorem ipsum dolor sit. Lorem, ipsum dolor.</p>
     
                             </div>
-                            <div class="col-lg-6 ">
-                                <div class="  mb-2">
-                                    <div class="btn-group btn-group-lg w-100">
-                                        <input type="radio" class="btn-check" value="q7-a1" id="q7-a1" name="q7-a"></input>
-                                        <label class="btn btn-outline-secondary" for="q7-a1">1</label>
+                            <div className="col-lg-6 ">
+                                <div className="  mb-2">
+                                    <div className="btn-group btn-group-lg w-100">
+                                        <input type="radio" className="btn-check" value="q7-a1" id="q7-a1" name="q7-a"/>
+                                        <label className="btn btn-outline-secondary" htmlFor="q7-a1">1</label>
     
     
-                                        <input type="radio" class="btn-check" value="q7-a2" id="q7-a2" name="q7-a"></input>
-                                        <label class="btn btn-outline-secondary" for="q7-a2">2</label>
+                                        <input type="radio" className="btn-check" value="q7-a2" id="q7-a2" name="q7-a"/>
+                                        <label className="btn btn-outline-secondary" htmlFor="q7-a2">2</label>
     
     
-                                        <input type="radio" class="btn-check" value="q7-a3" id="q7-a3" name="q7-a"></input>
-                                        <label class="btn btn-outline-secondary" for="q7-a3">3</label>
+                                        <input type="radio" className="btn-check" value="q7-a3" id="q7-a3" name="q7-a"/>
+                                        <label className="btn btn-outline-secondary" htmlFor="q7-a3">3</label>
     
-                                        <input type="radio" class="btn-check" value="q7-a4" id="q7-a4" name="q7-a"></input>
-                                        <label class="btn btn-outline-secondary" for="q4-a4">4</label>
+                                        <input type="radio" className="btn-check" value="q7-a4" id="q7-a4" name="q7-a"/>
+                                        <label className="btn btn-outline-secondary" htmlFor="q4-a4">4</label>
     
-                                        <input type="radio" class="btn-check" value="q7-a5" id="q7-a5" name="q7-a"></input>
-                                        <label class="btn btn-outline-secondary" for="q7-a5">5</label>
+                                        <input type="radio" className="btn-check" value="q7-a5" id="q7-a5" name="q7-a"/>
+                                        <label className="btn btn-outline-secondary" htmlFor="q7-a5">5</label>
     
-                                        <input type="radio" class="btn-check" value="q7-ana" id="q7-ana" name="q7-a"></input>
-                                        <label class="btn btn-outline-secondary" for="q7-ana">נמנע</label>
+                                        <input type="radio" className="btn-check" value="q7-ana" id="q7-ana" name="q7-a"/>
+                                        <label className="btn btn-outline-secondary" htmlFor="q7-ana">נמנע</label>
                                     </div>
                                 </div>
-                                <textarea class="form-control" rows="2"
+                                <textarea className="form-control" rows="2"
                                     placeholder="write something for Ali ..."></textarea>
     
     
@@ -395,30 +528,30 @@ const SurveyForm = () => {
     
     
                             </div>
-                            <hr class="mt-4"></hr>
+                            <hr className="mt-4"/>
     
     
                         </div>
-                        <div class="row my-2">
-                            <div class="col-lg-6">
-                                <h2 class="h5">Question #8: Lorem ipsum dolor sit ameo est dolquibusdam optio voluptas! Ex.
+                        <div className="row my-2">
+                            <div className="col-lg-6">
+                                <h2 className="h5">Question #8: Lorem ipsum dolor sit ameo est dolquibusdam optio voluptas! Ex.
                                 </h2>
-                                <p class="small">Lorem ipsum dolor sit. Lorem, ipsum dolor.</p>
+                                <p className="small">Lorem ipsum dolor sit. Lorem, ipsum dolor.</p>
     
                             </div>
-                            <div class="col-lg-6 ">
-                                <div class="d-flex justify-content-between  mb-2">
-                                    <span class="me-3">1</span>
-                                    <input type="range" max="5" min="1" class="form-range" name="q7-a"></input>
-                                    <span class="ms-3">5</span>
+                            <div className="col-lg-6 ">
+                                <div className="d-flex justify-content-between  mb-2">
+                                    <span className="me-3">1</span>
+                                    <input type="range" max="5" min="1" className="form-range" name="q7-a"/>
+                                    <span className="ms-3">5</span>
                                 </div>
-                                <textarea class="form-control" rows="2"
+                                <textarea className="form-control" rows="2"
                                     placeholder="write something for Ali ..."></textarea>
                             </div>
                         </div>
-                        <button type="submit" id="submitButton" class="btn btn-secondary my-4  d-block ms-auto">
+                        <button type="submit" id="submitButton" className="btn btn-secondary my-4  d-block ms-auto">
                             Submit
-                            <span class="spinner-border spinner-border-sm d-none"></span>
+                            <span className="spinner-border spinner-border-sm d-none"></span>
                         </button>
                     </div>
     
