@@ -9,88 +9,56 @@ import 'reactjs-popup/dist/index.css'; // Import the default styles
 import ContactUs from './ContactUs';
 import SLA from '../components/SLA'
 import ContactImg from "../imgs/contact.png"
+import Swal from 'sweetalert2';
+import ReactDOM from 'react-dom';
+const openModal = (buttonNumber) => {
+  let title, content;
+
+  // Customize based on the button number
+  if (buttonNumber === 1) {
+    title = 'אמנת השירות';
+    content = <SLA />;
+  } else if (buttonNumber === 2) {
+    title = 'דרכי יצירת קשר';
+    content = <ContactUs />;
+  }
+
+  // Open SweetAlert modal
+  Swal.fire({
+    title: title,
+    html: '<div id="swal-content"></div>',
+    showCloseButton: true,
+    showCancelButton: false,
+    showConfirmButton: false,
+    focusConfirm: false,
+    
+    width: '500px',
+    didOpen: () => {
+      // Render your component inside the SweetAlert2 modal
+      const swalContent = document.getElementById('swal-content');
+      const component = content;
+      ReactDOM.render(component, swalContent);
+    },
+  });
+};
+
+
 const HomeColumnRight = () => {
   return (
+    
     <div className="home-column1">
+      
         <div className="home-right-buttons">
         <Box imageSrc={BadReview}  alt="תלונת לקוח" title="תלונת לקוח"/>
-        <div >
-          <Popup 
-          trigger={
-          <div >
-            <Box imageSrc={Handshake} alt="אמנת השירות" title="אמנת השירות" />
-          </div>
-          }
-          modal
-          nested
-          overlayStyle={{ background: 'rgba(0,0,0,0.7)' }} // Set overlay style
-          contentStyle={{
-              // Set your content style
-              position: 'absolute',
-              top: '50%',
-              left: '50%',
-              transform: 'translate(-50%, -50%)',
-              borderRadius: '15px',
-              padding: '20px',
-              border: 'none',
-              width: '40%',
-              maxHeight: '70vh',
-              overflowY: 'auto',        
-
-          }}
-        >
-          {(close) => (
-            <div className="modal" >
-              <button className="close" onClick={close}>
-                &times;
-              </button>
-              <SLA/>
-            </div>
-          )}
-        </Popup>
+        <div onClick={() => openModal(1)}>
+          <Box imageSrc={Handshake} alt="אמנת השירות" title="אמנת השירות" />
         </div>
-        <div >
-          <Popup 
-          trigger={
-          <div >
-            <Box imageSrc={Chat} alt="צור קשר" title="צור קשר" />
-          </div>
-          }
-          modal
-          nested
-          overlayStyle={{ background: 'rgba(0,0,0,0.7)' }} // Set overlay style
-          contentStyle={{
-              // Set your content style
-              position: 'absolute',
-              top: '50%',
-              left: '50%',
-              transform: 'translate(-50%, -50%)',
-              borderRadius: '15px',
-              padding: '20px',
-              border: 'none',
-              width: '30%',
-              height:'40%',
-              maxHeight: '70vh',
-              overflowY: 'auto',        
 
-          }}
-        >
-          {(close) => (
-            <div className="modal" >
-              <button className="close"  onClick={close}>
-                &times;
-              </button>
-              <div style={{position: 'absolute',
-    right: 20,
-    top: 20}}>
-               <img src= {ContactImg} alt="" class="contact-img" />
-              </div>
-              <ContactUs/>
-              
-            </div>
-          )}
-        </Popup>
+        <div onClick={() => openModal(2)}>
+          <Box imageSrc={Chat} alt="צור קשר" title="צור קשר" />
         </div>
+
+
         {/* Add another Box component for the fourth box if needed */}
         </div>  
     </div>

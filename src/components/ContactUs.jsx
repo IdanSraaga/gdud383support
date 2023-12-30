@@ -4,7 +4,6 @@ import '../styles/ContactUsCss.css'
 const ContactUs = () => {
   return (
     <div>
-        <h2 style={{textAlign:'center'}}>דרכי יצירת קשר</h2>
         <table class="phone-contact-ways" style={{paddingBottom:"5px"}}>
             <thead>
                 <tr>

@@ -6,8 +6,9 @@ import { zoomPlugin } from '@react-pdf-viewer/zoom';
 const pdfjs = await import('pdfjs-dist/build/pdf');
 const pdfjsWorker = await import('pdfjs-dist/build/pdf.worker.entry');
 pdfjs.GlobalWorkerOptions.workerSrc = pdfjsWorker;
+console.log('Rendering SLA');
 
-export default function SLA() {
+const SLA = () => {
     const zoomPluginInstance = zoomPlugin();
 
     const { Zoom } = zoomPluginInstance;
@@ -17,6 +18,7 @@ export default function SLA() {
                 display: 'flex',
                 flexDirection: 'column',
                 height: '100%',
+                overflowY:'scroll',
             }}
         >
             <div
@@ -42,4 +44,7 @@ export default function SLA() {
         </div>        
 
     );
+    console.log('Rendering SLA');
+
 }
+export default SLA;

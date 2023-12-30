@@ -1,0 +1,38 @@
+<div >
+    <Popup 
+    trigger={
+    <div >
+      <Box imageSrc={Handshake} alt="אמנת השירות" title="אמנת השירות" />
+    </div>
+    }
+    modal
+    nested
+    overlayStyle={{ background: 'rgba(0,0,0,0.7)' }} // Set overlay style
+    contentStyle={{
+      
+        // Set your content style
+        height: '1000px', // Set height to 'auto' or your desired value
+
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        borderRadius: '15px',
+        padding: '20px',
+        border: 'none',
+        width: '40%',
+        maxHeight: '70vh',
+        overflowY: 'auto',        
+
+    }}
+  >
+    {(close) => (
+      <div className="modal" >
+        <button className="close" onClick={close}>
+          &times;
+        </button>
+        <SLA/>
+      </div>
+    )}
+  </Popup>
+  </div>
