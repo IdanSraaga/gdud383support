@@ -1,6 +1,6 @@
-import '../misc/bootstrap.min.css';
+import 'bootstrap';
 import '../styles/Survey.css'
-import React, { useState,useEffect, } from 'react';
+import React from 'react';
 const SurveyForm = () => {
 
 

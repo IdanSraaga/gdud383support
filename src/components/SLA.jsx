@@ -18,7 +18,6 @@ const SLA = () => {
                 display: 'flex',
                 flexDirection: 'column',
                 height: '100%',
-                overflowY:'scroll',
             }}
         >
             <div
@@ -34,7 +33,6 @@ const SLA = () => {
             <div
                 style={{
                     flex: 1,
-                    overflow: 'hidden',
                 }}
             >      <Worker >
 
@@ -44,7 +42,6 @@ const SLA = () => {
         </div>        
 
     );
-    console.log('Rendering SLA');
 
 }
 export default SLA;

@@ -4,23 +4,28 @@ import Box from './Box';
 import BadReview from "../imgs/bad-review.png"
 import Handshake from "../imgs/handshake.png"
 import Chat from "../imgs/chat.png"
-import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css'; // Import the default styles
 import ContactUs from './ContactUs';
 import SLA from '../components/SLA'
-import ContactImg from "../imgs/contact.png"
 import Swal from 'sweetalert2';
 import ReactDOM from 'react-dom';
+import '../styles/SLACSS.css'
 const openModal = (buttonNumber) => {
-  let title, content;
-
+  let title, content,width,customcss;
+  let customcontainercss = "";
   // Customize based on the button number
   if (buttonNumber === 1) {
     title = 'אמנת השירות';
     content = <SLA />;
+    width = "50%";
+    customcss = 'sla-custom-height'
+    customcontainercss = "container-css"
   } else if (buttonNumber === 2) {
     title = 'דרכי יצירת קשר';
     content = <ContactUs />;
+    width = "30vw";
+    customcss = 'contact-custom-height'
+    
   }
 
   // Open SweetAlert modal
@@ -31,8 +36,12 @@ const openModal = (buttonNumber) => {
     showCancelButton: false,
     showConfirmButton: false,
     focusConfirm: false,
-    
-    width: '500px',
+    customClass: {
+      htmlContainer: customcss, 
+      container:customcontainercss,
+    },
+    width: width,
+  
     didOpen: () => {
       // Render your component inside the SweetAlert2 modal
       const swalContent = document.getElementById('swal-content');
@@ -45,7 +54,7 @@ const openModal = (buttonNumber) => {
 
 const HomeColumnRight = () => {
   return (
-    
+
     <div className="home-column1">
       
         <div className="home-right-buttons">

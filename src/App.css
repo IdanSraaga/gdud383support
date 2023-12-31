@@ -5,7 +5,7 @@ overflow: hidden;
     display: flex;
     align-items: center; 
     justify-content: center;
-    overflow-x: auto;
+    /* overflow-x: auto; */
   }
   
   .footer{

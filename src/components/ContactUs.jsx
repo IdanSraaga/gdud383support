@@ -3,7 +3,7 @@ import React from 'react';
 import '../styles/ContactUsCss.css'
 const ContactUs = () => {
   return (
-    <div>
+    <div style={{overflow:'hidden'}}>
         <table class="phone-contact-ways" style={{paddingBottom:"5px"}}>
             <thead>
                 <tr>
