@@ -7,7 +7,7 @@ const ContactUs = () => {
         <table class="phone-contact-ways" style={{paddingBottom:"5px"}}>
             <thead>
                 <tr>
-                <th style={{width:'50%',fontSize:'20px'} }>אדום - מבצעי בלבד</th>
+                <th style={{width:'50%',fontSize:'20px'} }>אדום</th>
                 <th style={{width:'50%',fontSize:'20px'}}>מרכזייה</th>
                 </tr>
             </thead>
