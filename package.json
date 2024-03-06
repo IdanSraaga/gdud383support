@@ -25,6 +25,8 @@
     "remodal": "^1.1.1",
     "styled-components": "^6.1.6",
     "sweetalert2": "^11.10.2",
+    "swift": "^2.8.0",
+    "swiper": "^11.0.5",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
